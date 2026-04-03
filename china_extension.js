@@ -95,3 +95,119 @@
     s.textContent = '.rtab.active.cn{background:#ef444420;border-color:#ef4444;color:#fca5a5}';
     document.head.appendChild(s);
   }
+
+  // ── 5. Patch setRegion ──────────────────────────────────
+  var _setRegion = window.setRegion;
+  window.setRegion = function(reg) {
+    _setRegion(reg);
+    var t = document.getElementById('tabCN');
+    if (t) t.className = 'rtab cn' + (reg === 'cn' ? ' active' : '');
+    if (reg === 'cn') {
+      var lbl = document.getElementById('segRegLabel');
+      if (lbl) lbl.textContent = '(China)';
+      if (typeof map !== 'undefined') map.flyTo([35,104], 4, {duration:1.2});
+      renderSegChips();
+    }
+  };
+
+  // ── 6. Patch filtered ───────────────────────────────────
+  var _filtered = window.filtered;
+  window.filtered = function() {
+    var reg = typeof region !== 'undefined' ? region : 'all';
+    if (reg === 'cn') {
+      return DATA.filter(function(row) {
+        if (row.region !== 'China') return false;
+        if (typeof selSegs !== 'undefined' && !selSegs.has(row.seg)) return false;
+        if (typeof selStatus !== 'undefined' && selStatus.size > 0) {
+          if (!selStatus.has(row.status_display || row.status)) return false;
+        }
+        if (typeof q !== 'undefined' && q) {
+          var txt = [row.name,row.sub,row.location,row.materials,row.process,row.info,row.partnerships].join(' ').toLowerCase();
+          if (!txt.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+    return _filtered();
+  };
+
+  // ── 7. Patch updateStats ────────────────────────────────
+  var _updateStats = window.updateStats;
+  window.updateStats = function(d) {
+    _updateStats(d);
+    var el = document.getElementById('sCN');
+    if (el) el.textContent = d.filter(function(r) { return r.region === 'China'; }).length;
+  };
+
+  // ── 8. Patch renderSegChips ─────────────────────────────
+  var _renderSegChips = window.renderSegChips;
+  window.renderSegChips = function() {
+    var reg = typeof region !== 'undefined' ? region : 'all';
+    if (reg !== 'cn') { _renderSegChips(); return; }
+    var wrap = document.getElementById('segChips');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    var list = ['Gigafactory','Mining & Resources','Cathode Materials','Anode Materials','Electrolyte','Separator','Recycling','Automaker JV'];
+    list.forEach(function(k) {
+      var v = SEG_CFG[k] || {c:'#94a3b8', l:k};
+      var el = document.createElement('div');
+      el.className = 'chip' + (selSegs.has(k) ? ' on' : '');
+      el.style.cssText = 'background:'+v.c+'22;border-color:'+v.c+';color:'+v.c;
+      el.textContent = v.l || k;
+      el.onclick = (function(key,elem) {
+        return function() {
+          if (selSegs.has(key)) selSegs.delete(key); else selSegs.add(key);
+          elem.classList.toggle('on', selSegs.has(key));
+          refresh();
+        };
+      })(k, el);
+      wrap.appendChild(el);
+    });
+  };
+
+  // ── 9. FIX: Region label in detail panel ───────────────
+  // Uses MutationObserver to catch whenever the panel re-renders.
+  // If the currently selected facility is China but the panel shows
+  // "US/Canada", it replaces every matching element.
+  function fixDetailRegion() {
+    var panel = document.getElementById('detail') ||
+                document.getElementById('detailPanel') ||
+                document.getElementById('panel') ||
+                document.getElementById('pane');
+    if (!panel) return;
+
+    var observer = new MutationObserver(function() {
+      var feat = typeof selFeat !== 'undefined' ? selFeat : null;
+      if (!feat || feat.region !== 'China') return;
+      panel.querySelectorAll('*').forEach(function(el) {
+        // Only process leaf-ish nodes with visible text
+        if (el.children.length > 2) return;
+        var t = el.textContent || '';
+        if (t.includes('US/Canada') || t === '🇺🇸 US/Canada') {
+          el.textContent = '🇨🇳 China';
+          el.style.color   = '#fca5a5';
+          el.style.background = '#ef444420';
+          if ('borderColor' in el.style) el.style.borderColor = '#ef4444';
+        }
+      });
+    });
+
+    observer.observe(panel, {childList: true, subtree: true, characterData: true});
+  }
+
+  // ── 10. Init ────────────────────────────────────────────
+  function init() {
+    addChinaStat();
+    addChinaTab();
+    fixDetailRegion();
+    if (typeof refresh === 'function') refresh();
+    console.log('🇨🇳 China extension loaded: ' + CHINA_DATA.length + ' facilities');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 200);
+  }
+
+})();
