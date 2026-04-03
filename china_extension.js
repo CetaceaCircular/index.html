@@ -1,0 +1,218 @@
+// =======================================================
+// China Battery Supply Chain Extension
+// Source: Volta Foundation Battery Report 2025
+// Add this file to your GitHub repo and add:
+//   <script src="china_extension.js"></script>
+// just before </body> in your index.html
+// =======================================================
+
+(function() {
+  // 1. China facility data
+  var CHINA_DATA = [
+{"region":"China","seg":"Mining & Resources","name":"Ganfeng Lithium","sub":"Jiangxi HQ & Refinery","status":"Commercial","location":"Xinyu, Jiangxi, China","country":"China","lat":27.7981,"lng":114.9253,"origin":"China","materials":"Lithium carbonate, lithium hydroxide, lithium metal","process":"Lithium mining & refining","capacity":"100,000 MT LCE/yr","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"BMW, Tesla, LG Energy Solution","info":"One of China's two largest lithium companies. Controls lithium resources in Argentina, Australia, and DRC. Produces lithium carbonate, lithium hydroxide, lithium metal, and solid-state battery materials. Also developing recycling operations.","website":"https://www.ganfenglithium.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Mining & Resources","name":"Tianqi Lithium","sub":"Chengdu HQ","status":"Commercial","location":"Chengdu, Sichuan, China","country":"China","lat":30.5728,"lng":104.0668,"origin":"China","materials":"Lithium carbonate, lithium hydroxide","process":"Lithium ore & brine processing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"SQM (Chile), IGO (Australia)","info":"Controls the Greenbushes spodumene mine in Australia (world's largest hard-rock lithium mine) via Talison JV. Major global lithium producer with mines in Australia and Chile. Listed on Shenzhen Main Board (002466).","website":"https://www.tianqilithium.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Mining & Resources","name":"Yahua Group","sub":"Sichuan Operations","status":"Commercial","location":"Ya'an, Sichuan, China","country":"China","lat":30.0107,"lng":102.9956,"origin":"China","materials":"Lithium hydroxide, lithium carbonate","process":"Lithium chemical processing","capacity":"30,000 MT LiOH/yr","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Tesla (supply agreement)","info":"Part of the three largest domestic lithium processors alongside Tianqi and Ganfeng — together controlling over 75% of domestic lithium processing. Key Tesla supplier for lithium hydroxide.","website":"https://www.yahuagroup.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Mining & Resources","name":"Huayou Cobalt","sub":"Tongxiang HQ","status":"Commercial","location":"Tongxiang, Zhejiang, China","country":"China","lat":30.6493,"lng":120.5654,"origin":"China","materials":"Cobalt sulfate, nickel sulfate, NCM precursor","process":"Cobalt & nickel refining, precursor production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, LG Chem, POSCO","info":"Controls more than 30% of global cobalt refining capacity. Vertically integrated from DRC cobalt mining through refining to NCM precursor production. Also building recycling and overseas manufacturing capacity.","website":"https://www.huayoucobalt.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Cathode Materials","name":"Hunan Yuneng","sub":"Changsha Production Base","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.2278,"lng":112.9388,"origin":"China","materials":"LFP cathode active material","process":"LFP cathode production","capacity":"500,000 MT/yr (planned)","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, BYD, EVE Energy","info":"World's #1 LFP cathode producer by volume for multiple consecutive years. Leads through nanonization and high compaction density technology. Market leader in China's 'one-superpower, many-strong' LFP cathode market. In H1 2025 LFP accounted for 77% of total cathode material shipments in China.","website":"https://www.yuneng.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Cathode Materials","name":"Ronbay Technology","sub":"Changsha Operations","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.2569,"lng":112.9792,"origin":"China","materials":"NCM cathode — high-nickel and ultra-high-nickel","process":"NCM cathode production","capacity":"200,000 MT/yr","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, Samsung SDI, SK On","info":"Maintained technological leadership in high-nickel and ultra-high-nickel NCM materials. Building production bases in South Korea and Europe. Top-5 global NCM cathode producer with strong international supply chain presence.","website":"https://www.ronbay.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Cathode Materials","name":"Dynanonic","sub":"Hunan Production Base","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.1931,"lng":112.9836,"origin":"China","materials":"LFP, LMFP cathode materials","process":"LFP/LMFP cathode production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"One of the leading LFP cathode consolidators in China. Part of the top-tier group alongside Hunan Yuneng consolidating the LFP market. Also developing LMFP (lithium manganese iron phosphate) for higher-energy applications.","website":"https://www.dynanonic.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Cathode Materials","name":"B&M (Huayou subsidiary)","sub":"Quzhou Production Base","status":"Commercial","location":"Quzhou, Zhejiang, China","country":"China","lat":28.9397,"lng":118.8593,"origin":"China","materials":"NCM precursor and cathode","process":"NCM precursor & cathode production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Huayou Cobalt (parent)","info":"Huayou Cobalt's downstream cathode materials arm. Vertically integrated from cobalt/nickel resources through precursor to finished NCM cathode. Top-3 domestic NCM precursor/cathode supplier.","website":"https://www.huayoucobalt.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Cathode Materials","name":"Brunp (CATL subsidiary)","sub":"Changsha Cathode & Recycling","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.2337,"lng":112.9274,"origin":"China","materials":"NCM cathode, recycled cathode precursor","process":"Cathode production & recycling","capacity":"270,000 MT battery processing/yr","capacity_2030":"1,000,000 MT","jobs":"","jobs_2030":"","partnerships":"CATL (parent)","info":"CATL's strategic recycling and cathode materials arm. Processed over 120 kt of batteries in 2024, with 270 kt capacity in operation. Additional 300 kt+ under construction. Key to CATL's closed-loop 'recycling-regeneration-cathode material' model.","website":"https://www.catl.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Anode Materials","name":"BTR New Material Group","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5431,"lng":114.0579,"origin":"China","materials":"Natural graphite anode, silicon-carbon anode","process":"Graphite mining & anode production","capacity":"300,000+ MT/yr","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, Panasonic, Samsung SDI","info":"Dominates natural graphite sector with 63% global market share. Forms a duopoly with Shanshan in the anode market. Top-5 global market share exceeds 70%. Continuously investing in silicon-carbon anode technology.","website":"https://www.btrchina.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Anode Materials","name":"Shanshan Co.","sub":"Changsha Production Base","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.2072,"lng":112.9762,"origin":"China","materials":"Artificial graphite anode, electrolyte, cathode materials","process":"Artificial graphite, electrode materials","capacity":"300,000+ MT/yr anode","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, BYD, LG Energy","info":"Led the artificial graphite anode sector for years. Forms BTR/Shanshan duopoly controlling 70% of global anode market. Also produces electrolytes and cathode materials. Listed on Shanghai Main Board (600884).","website":"https://www.shanshan.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Anode Materials","name":"Zhongke Shinzoom","sub":"Production Base","status":"Commercial","location":"Shenyang, Liaoning, China","country":"China","lat":41.8057,"lng":123.4315,"origin":"China","materials":"Artificial graphite anode","process":"Graphite anode production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"Top-5 anode material producer in China. Part of China's CR5 holding ~70% of global anode market. Specializes in high-performance artificial graphite for EV applications.","website":"","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Electrolyte","name":"Tinci Materials","sub":"Guangzhou HQ","status":"Commercial","location":"Guangzhou, Guangdong, China","country":"China","lat":23.1291,"lng":113.2644,"origin":"China","materials":"Liquid electrolyte, LiPF6","process":"Electrolyte production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, BYD, LG Energy","info":"China's and the world's #1 electrolyte producer with 33% global market share. Controls complete industry chain from lithium salts, solvents, to additives. Listed on ChiNext (300073). Also building production in the US via joint venture with Honeywell.","website":"https://www.tinci.com.cn/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Electrolyte","name":"Capchem Technology","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5431,"lng":114.0579,"origin":"China","materials":"Liquid electrolyte, fluorinated solvents","process":"Electrolyte production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, Samsung SDI","info":"#2 electrolyte producer in China with ~14% domestic market share. Top-5 globally holds ~90% of market. Continuously innovating in LiPF6 and electrolyte additives. Expanding capacity in the US (Ohio and Louisiana).","website":"https://www.capchem.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Separator","name":"SEMCORP","sub":"Changzhou Production Base","status":"Commercial","location":"Changzhou, Jiangsu, China","country":"China","lat":31.7745,"lng":119.9741,"origin":"China","materials":"Wet-process separator, ceramic-coated separator","process":"Battery separator manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, BYD, CALB","info":"World's #1 separator producer with 45% global market share. Top-2 with Senior Technology together account for 64% of market. Leads in ultra-thin separators (below 5 micrometers). Already building capacity in North Carolina USA.","website":"https://www.semcorp.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Separator","name":"Senior Technology Materials","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5431,"lng":114.0579,"origin":"China","materials":"Wet-process separator","process":"Battery separator manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"EVE Energy, Gotion","info":"#2 global separator producer with 19% market share. Top-5 Chinese separator producers account for 87% of global market. Specializes in wet-process and ceramic-coated separator technology.","website":"https://www.senior-tech.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Separator","name":"Sinoma Tech","sub":"Beijing Operations","status":"Commercial","location":"Beijing, China","country":"China","lat":39.9042,"lng":116.4074,"origin":"China","materials":"Ceramic-coated separator","process":"Battery separator manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"Top-5 Chinese separator manufacturer. Part of Sinoma International Engineering group. Specializes in ceramic-coated separators providing enhanced thermal stability for high-energy batteries.","website":"https://www.sinomatech.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"CATL","sub":"Ningde Headquarters Base","status":"Commercial","location":"Ningde, Fujian, China","country":"China","lat":26.6659,"lng":119.5228,"origin":"China","materials":"LFP, NCM, Na-ion, condensed matter cells","process":"EV & ESS battery cell manufacturing","capacity":"700+ GWh total installed","capacity_2030":"","jobs":"100,000+","jobs_2030":"","partnerships":"BMW, Mercedes-Benz, VW, Tesla, Toyota, Ford","info":"World's #1 battery manufacturer with 38% EV market share and 42% ESS market share globally. 2024 net profit RMB ~46 billion (Q1-Q3). Total domestic capacity exceeds 3 TWh. Developing solid-state, sodium-ion, and condensed matter batteries in parallel. R&D investment reached RMB 18 billion in 2024.","website":"https://www.catl.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"CATL","sub":"Yibin Production Base","status":"Commercial","location":"Yibin, Sichuan, China","country":"China","lat":28.7677,"lng":104.6432,"origin":"China","materials":"LFP cells, ESS cells","process":"EV & ESS battery cell manufacturing","capacity":"100+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Yibin government ('Power Battery City' partnership)","info":"CATL's flagship inland production base in Yibin — branded as 'Power Battery City'. Major hub for LFP cell production leveraging Sichuan's hydro power for low-carbon manufacturing. One of CATL's largest single-site operations.","website":"https://www.catl.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"CATL","sub":"Chongqing Production Base","status":"Commercial","location":"Chongqing, China","country":"China","lat":29.5637,"lng":106.5504,"origin":"China","materials":"LFP, NCM cells","process":"EV battery cell manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Changan Automobile (JV)","info":"CATL-Changan joint venture battery base in Chongqing. Part of CATL's strategy of joint ventures with state-owned automakers to build dedicated cell capacity closer to assembly plants.","website":"https://www.catl.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"BYD / FinDreams Battery","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5431,"lng":114.0579,"origin":"China","materials":"LFP Blade Battery, NCM cells","process":"Vertically integrated EV & ESS battery","capacity":"400+ GWh total","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Toyota, FAW (Blade Battery supply)","info":"World's #2 battery manufacturer with 28% EV and 25% ESS market share. Fully vertically integrated from raw materials to finished EVs. Blade Battery and CTP technology. Full-year 2024 R&D expenditure RMB 54.2 billion (+35.68% YoY). FinDreams is BYD's dedicated battery subsidiary now supplying third-party OEMs.","website":"https://www.byd.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"CALB","sub":"Changzhou HQ","status":"Commercial","location":"Changzhou, Jiangsu, China","country":"China","lat":31.7745,"lng":119.9741,"origin":"China","materials":"LFP, NCM pouch cells","process":"EV & ESS battery cell manufacturing","capacity":"120+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Leapmotor (2025 JV), SAIC, Geely","info":"China Aviation Lithium Battery — Top-5 Chinese battery manufacturer. Secured world's largest energy storage project order in 2024. Focus on high-voltage fast-charging technology. Established JV with Leapmotor in 2025. Building gigafactory in Portugal (Sines). Listed on STAR Market (688567 via Farasis is different — CALB is 3931.HK).","website":"https://www.calb.cn/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"EVE Energy","sub":"Huizhou HQ","status":"Commercial","location":"Huizhou, Guangdong, China","country":"China","lat":23.1126,"lng":114.4158,"origin":"China","materials":"LFP, NCM cylindrical and prismatic cells","process":"EV & ESS & consumer battery manufacturing","capacity":"80+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"BMW (large-format cylindrical), Daimler Truck","info":"Dual-wheel drive strategy covering both energy storage and power batteries. Announced CNY 10.8 billion investment to construct world's largest standalone carbon-neutral battery plant (60 GWh, LF560K large ESS cells). Building gigafactory in Debrecen, Hungary. Listed on ChiNext (300014).","website":"https://www.evebattery.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"Gotion High-Tech","sub":"Hefei HQ","status":"Commercial","location":"Hefei, Anhui, China","country":"China","lat":31.8206,"lng":117.2272,"origin":"China","materials":"LFP, semi-solid-state cells","process":"EV & ESS battery cell manufacturing","capacity":"80+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Volkswagen Group (26.47% stake, ~€1.1B investment)","info":"Strategic partnership with Volkswagen. Technology aligned with German automotive standards. VW China Investment invested ~€1.1B for 26.47% stake. Building gigafactories in Germany, Hungary, Illinois USA, and Morocco. Developing semi-solid-state batteries. Listed on Shenzhen Main Board (2074).","website":"https://www.gotion.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"SVOLT Energy Technology","sub":"Baoding HQ","status":"Commercial","location":"Baoding, Hebei, China","country":"China","lat":38.8671,"lng":115.4648,"origin":"China","materials":"LFP, NCM cobalt-free cells","process":"EV battery cell manufacturing","capacity":"40+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Great Wall Motor (parent), BMW","info":"Spun off from Great Wall Motor in 2018. Developing cobalt-free NCM cathode technology. International presence with manufacturing in Germany. Supplies Great Wall Motor EV platforms and expanding third-party OEM relationships.","website":"https://www.svolt.cn/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"Hithium","sub":"Xiamen HQ","status":"Commercial","location":"Xiamen, Fujian, China","country":"China","lat":24.4798,"lng":118.0894,"origin":"China","materials":"LFP ESS cells, large-format prismatic","process":"ESS battery cell manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Masdar (Abu Dhabi 19 GWh TENER project)","info":"Fast-rising ESS specialist. Top-3 in China's ESS battery market. Selected to supply CATL technology (TENER) for Masdar's Abu Dhabi 19 GWh solar-plus-storage project. Focus on long-cycle-life LFP cells with 10,000+ cycle life.","website":"https://www.hithium.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"Sunwoda Electronic","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5177,"lng":113.9866,"origin":"China","materials":"Consumer Li-ion, power battery packs","process":"Consumer & EV battery manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"BYD, SAIC","info":"Listed company (300207 ChiNext) covering consumer batteries, power batteries, and energy storage. Strong in Pearl River Delta talent ecosystem. Part of China's top-tier battery ecosystem.","website":"https://www.sunwoda.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"Farasis Energy","sub":"Ganzhou HQ","status":"Commercial","location":"Ganzhou, Jiangxi, China","country":"China","lat":25.8311,"lng":114.9339,"origin":"China","materials":"Soft-pack (pouch) LFP & NCM cells","process":"EV & ESS battery cell manufacturing","capacity":"30+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Mercedes-Benz, Geely, BAIC","info":"Specializes in soft-pack (pouch) battery technology. STAR Market listed (688567). Key supplier to Mercedes-Benz for European EV programs. International gigafactory in Bitterfeld-Wolfen Germany (suspended). Also building facility in Turkey (Gemlik).","website":"https://www.farasis.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"Great Power Energy","sub":"Guangzhou HQ","status":"Commercial","location":"Guangzhou, Guangdong, China","country":"China","lat":23.1291,"lng":113.2644,"origin":"China","materials":"Small Li-ion, ESS battery systems","process":"Consumer & ESS battery manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"Listed company (300438 ChiNext) covering small lithium-ion batteries, energy storage batteries, and power battery packs. Major Pearl River Delta battery player. Focus on system integration for ESS applications.","website":"https://www.great-battery.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Gigafactory","name":"COSMX Battery","sub":"Ningbo HQ","status":"Commercial","location":"Ningbo, Zhejiang, China","country":"China","lat":29.8683,"lng":121.544,"origin":"China","materials":"Consumer Li-ion, pouch cells","process":"Consumer battery cell manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Chery Automobile","info":"Fast-rising consumer and automotive battery manufacturer in Ningbo. Part of the Yangtze River Delta battery cluster. Key supplier to Chery Automobile's EV programs.","website":"https://www.cosmx.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Recycling","name":"GEM Co. Ltd","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5431,"lng":114.0579,"origin":"China","materials":"Recovered Co, Ni, Mn, Li; NCM precursor","process":"Hydrometallurgical recycling, precursor production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, Samsung SDI, POSCO","info":"Top-1 Chinese battery recycler by market share. Pioneer in 'recycling-regeneration-cathode material' closed-loop model. Advanced hydrometallurgy and direct regeneration technologies achieving 95%+ recovery rates for Ni, Co, Mn. Processing capacity rapidly scaling as China targets 3.6M tonnes of used batteries in 2025.","website":"https://www.gem.com.cn/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Recycling","name":"Brunp Recycling","sub":"Changsha Operations","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.2337,"lng":112.9274,"origin":"China","materials":"Recovered Co, Ni, Mn, Li; cathode precursor","process":"Hydrometallurgical recycling","capacity":"270,000 MT/yr (operating); 300,000+ MT under construction","capacity_2030":"1,000,000 MT","jobs":"","jobs_2030":"","partnerships":"CATL (parent company)","info":"CATL's dedicated recycling arm. Processed over 120 kt of batteries in 2024. 270 kt of capacity in operation with 300+ kt under construction. Longer-term plans targeting 1,000 kt. Achieving 99%+ recovery rates for key metals. Strategic for CATL's closed-loop supply chain and cost control.","website":"https://www.brunp.com.cn/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Recycling","name":"Guanghua Sci-Tech","sub":"Guangdong Operations","status":"Commercial","location":"Foshan, Guangdong, China","country":"China","lat":23.0218,"lng":113.1216,"origin":"China","materials":"Cobalt sulfate, nickel sulfate, lithium carbonate","process":"Hydrometallurgical recycling","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"Top-5 Chinese battery recycler. Specializes in precious metal and battery material recovery. Part of China's rapidly scaling recycling sector where 156 licensed recyclers operate under MIIT's whitelist system as of 2024.","website":"https://www.guanghuasci.com/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Recycling","name":"Ganfeng Recycling","sub":"Jiangxi Operations","status":"Commercial","location":"Xinyu, Jiangxi, China","country":"China","lat":27.7981,"lng":114.9253,"origin":"China","materials":"Recovered lithium, cobalt, nickel","process":"Battery recycling & lithium recovery","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Ganfeng Lithium (parent)","info":"Recycling division of Ganfeng Lithium. Leverages Ganfeng's lithium processing expertise to recover battery-grade lithium from end-of-life cells. Part of China's closed-loop battery lifecycle strategy.","website":"https://www.ganfenglithium.com/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Recycling","name":"Huayou Recycling","sub":"Zhejiang Operations","status":"Commercial","location":"Tongxiang, Zhejiang, China","country":"China","lat":30.6493,"lng":120.5654,"origin":"China","materials":"Cobalt, nickel, lithium recovery","process":"Hydrometallurgical battery recycling","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Huayou Cobalt (parent)","info":"Recycling arm of Huayou Cobalt. Vertically integrated from recycling through refining to cathode production. Part of Huayou's closed-loop strategy across the cobalt and nickel value chain.","website":"https://www.huayoucobalt.com/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Automaker JV","name":"CATL–BAIC JV","sub":"Battery Plant","status":"Under construction","location":"Beijing, China","country":"China","lat":39.9042,"lng":116.4074,"origin":"China","materials":"LFP, NCM cells","process":"EV battery cell manufacturing JV","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL + BAIC Group (2024)","info":"2024 joint venture between CATL and BAIC (Beijing Automotive Group). One of several state-owned automaker JV models deepening battery-automaker integration in China. JV model continues to expand as automakers seek dedicated cell capacity.","website":"https://www.catl.com/","is_recycling":false,"process_cat":"","status_display":"Under construction","status_norm":"Under construction"},
+{"region":"China","seg":"Automaker JV","name":"Jiyao Tongxing (Geely Battery)","sub":"Zhejiang HQ","status":"Commercial","location":"Hangzhou, Zhejiang, China","country":"China","lat":30.2741,"lng":120.1551,"origin":"China","materials":"LFP, NCM cells for Geely group vehicles","process":"EV battery cell manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Geely Holding (parent), CATL","info":"Geely consolidated its battery operations in 2024 under Jiyao Tongxing. Manages battery supply across Geely's brands including Zeekr, Galaxy, and Lynk & Co. Full-stack automaker approach to vertical integration in battery supply chain.","website":"https://www.geely.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"}
+  ];
+
+  // Push into global DATA array
+  if (typeof DATA !== 'undefined') {
+    CHINA_DATA.forEach(function(r) { DATA.push(r); });
+  }
+
+  // 2. Add China seg configs
+  var cnSegs = {
+    'Mining & Resources':  {c:'#f59e0b', l:'⛏ Mining & Resources', r:'China'},
+    'Cathode Materials':   {c:'#ec4899', l:'⚡ Cathode (CAM)', r:'China'},
+    'Anode Materials':     {c:'#8b5cf6', l:'📦 Anode (AAM)', r:'China'},
+    'Electrolyte':         {c:'#06b6d4', l:'🧪 Electrolyte', r:'China'},
+    'Separator':           {c:'#22c55e', l:'🔲 Separator', r:'China'},
+    'Automaker JV':        {c:'#f97316', l:'🚗 Automaker JV', r:'China'}
+  };
+  Object.keys(cnSegs).forEach(function(k) {
+    if (typeof SEG_CFG !== 'undefined') SEG_CFG[k] = cnSegs[k];
+  });
+
+  // 3. Add China to region colors
+  if (typeof REGION_COLORS !== 'undefined') {
+    REGION_COLORS['China'] = '#fca5a5';
+  }
+
+  // 4. Add China to map views
+  if (typeof VIEWS !== 'undefined') {
+    VIEWS['cn'] = [35, 104, 4];
+  }
+
+  // 5. Add China segs to initial selection
+  if (typeof selSegs !== 'undefined') {
+    Object.keys(cnSegs).forEach(function(k) { selSegs.add(k); });
+    // Also add Gigafactory and Recycling for China (already in selSegs)
+  }
+
+  // 6. Inject China stats counter into the stats bar
+  var statsBar = document.querySelector('.stats');
+  if (statsBar) {
+    var cnStat = document.createElement('div');
+    cnStat.className = 'sc';
+    cnStat.style.borderColor = '#fca5a5';
+    cnStat.innerHTML = '<div class="n" style="color:#fca5a5" id="sCN">–</div><div class="l">🇨🇳 China</div>';
+    statsBar.appendChild(cnStat);
+  }
+
+  // 7. Inject China tab button into header tabs
+  var tabIN = document.getElementById('tabIN');
+  if (tabIN) {
+    var tabCN = document.createElement('div');
+    tabCN.className = 'rtab cn';
+    tabCN.id = 'tabCN';
+    tabCN.textContent = '🇨🇳 China';
+    tabCN.onclick = function() { setRegion('cn'); };
+    tabIN.parentNode.insertBefore(tabCN, tabIN.nextSibling);
+  }
+
+  // 8. Add CSS for China tab
+  var style = document.createElement('style');
+  style.textContent = '.rtab.active.cn{background:#ef444420;border-color:#ef4444;color:#fca5a5}';
+  document.head.appendChild(style);
+
+  // 9. Patch setRegion to handle 'cn'
+  var origSetRegion = window.setRegion;
+  window.setRegion = function(reg) {
+    origSetRegion(reg);
+    // Update China tab styling
+    var cnTab = document.getElementById('tabCN');
+    if (cnTab) cnTab.className = 'rtab cn' + (reg === 'cn' ? ' active' : '');
+    // Update seg label
+    if (reg === 'cn') {
+      var lbl = document.getElementById('segRegLabel');
+      if (lbl) lbl.textContent = '(China)';
+    }
+    // Fly to China
+    if (reg === 'cn' && typeof map !== 'undefined') {
+      map.flyTo([35, 104], 4, {duration: 1.2});
+    }
+    // Re-render seg chips for China
+    if (reg === 'cn') renderSegChips();
+  };
+
+  // 10. Patch filtered() to handle China region
+  var origFiltered = window.filtered;
+  window.filtered = function() {
+    var r = typeof region !== 'undefined' ? region : 'all';
+    if (r === 'cn') {
+      return DATA.filter(function(row) {
+        if (row.region !== 'China') return false;
+        if (!selSegs.has(row.seg)) return false;
+        if (selStatus.size > 0) {
+          var s = row.status_display || row.status;
+          if (!selStatus.has(s)) return false;
+        }
+        if (typeof q !== 'undefined' && q) {
+          var txt = (row.name + row.sub + row.location + row.materials + row.process + row.origin + row.info + row.partnerships).toLowerCase();
+          if (!txt.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+    return origFiltered();
+  };
+
+  // 11. Patch updateStats to add China count
+  var origUpdateStats = window.updateStats;
+  window.updateStats = function(d) {
+    origUpdateStats(d);
+    var cnEl = document.getElementById('sCN');
+    if (cnEl) cnEl.textContent = d.filter(function(r) { return r.region === 'China'; }).length;
+  };
+
+  // 12. Patch renderSegChips for China
+  var origRenderSegChips = window.renderSegChips;
+  window.renderSegChips = function() {
+    var r = typeof region !== 'undefined' ? region : 'all';
+    if (r === 'cn') {
+      var wrap = document.getElementById('segChips');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      var cnSegList = ['Gigafactory','Mining & Resources','Cathode Materials','Anode Materials','Electrolyte','Separator','Recycling','Automaker JV'];
+      cnSegList.forEach(function(k) {
+        var v = SEG_CFG[k] || {c:'#94a3b8', l:k};
+        var el = document.createElement('div');
+        el.className = 'chip' + (selSegs.has(k) ? ' on' : '');
+        el.style.cssText = 'background:' + v.c + '22;border-color:' + v.c + ';color:' + v.c;
+        el.textContent = v.l || k;
+        el.onclick = (function(key, elem) {
+          return function() {
+            if (selSegs.has(key)) selSegs.delete(key); else selSegs.add(key);
+            elem.classList.toggle('on', selSegs.has(key));
+            refresh();
+          };
+        })(k, el);
+        wrap.appendChild(el);
+      });
+      return;
+    }
+    origRenderSegChips();
+  };
+
+  // 13. Patch cnt bar to show China flag
+  var origRenderTable = window.renderTable;
+  window.renderTable = function(d) {
+    origRenderTable(d);
+    var cnt = document.getElementById('cntBar');
+    if (cnt) {
+      var cnC = d.filter(function(r) { return r.region === 'China'; }).length;
+      if (cnC && !cnt.innerHTML.includes('🇨🇳')) {
+        cnt.innerHTML += '<span class="rpill" style="background:#ef444420;color:#fca5a5">🇨🇳 ' + cnC + '</span>';
+      }
+    }
+  };
+
+  // 14. Patch filtered to exclude China from non-China regional views
+  // (already handled — origFiltered uses region checks for us/eu/in/all)
+  // We just need to make sure 'all' includes China — it does by default since
+  // 'all' has no region filter in origFiltered.
+
+  // 15. Add 'cn' to the region filter inside origFiltered for non-all views
+  // The existing filtered() already uses: if(region==='us'&&r.region!=='US/Canada') return false;
+  // We patched the cn case above. For 'all', China appears automatically.
+
+  // Re-run refresh to show China data
+  if (typeof refresh === 'function') {
+    setTimeout(refresh, 100);
+  }
+
+  console.log('🇨🇳 China battery supply chain data loaded: ' + CHINA_DATA.length + ' facilities');
+})();
