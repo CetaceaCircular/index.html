@@ -1,13 +1,12 @@
 // =======================================================
-// China Battery Supply Chain Extension
+// China Battery Supply Chain Extension v2
 // Source: Volta Foundation Battery Report 2025
-// Add this file to your GitHub repo and add:
-//   <script src="china_extension.js"></script>
-// just before </body> in your index.html
+// Add <script src="china_extension.js"></script> before </body>
 // =======================================================
 
 (function() {
-  // 1. China facility data
+
+  // ── 1. China facility data ──────────────────────────────
   var CHINA_DATA = [
 {"region":"China","seg":"Mining & Resources","name":"Ganfeng Lithium","sub":"Jiangxi HQ & Refinery","status":"Commercial","location":"Xinyu, Jiangxi, China","country":"China","lat":27.7981,"lng":114.9253,"origin":"China","materials":"Lithium carbonate, lithium hydroxide, lithium metal","process":"Lithium mining & refining","capacity":"100,000 MT LCE/yr","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"BMW, Tesla, LG Energy Solution","info":"One of China's two largest lithium companies. Controls lithium resources in Argentina, Australia, and DRC. Produces lithium carbonate, lithium hydroxide, lithium metal, and solid-state battery materials. Also developing recycling operations.","website":"https://www.ganfenglithium.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
 {"region":"China","seg":"Mining & Resources","name":"Tianqi Lithium","sub":"Chengdu HQ","status":"Commercial","location":"Chengdu, Sichuan, China","country":"China","lat":30.5728,"lng":104.0668,"origin":"China","materials":"Lithium carbonate, lithium hydroxide","process":"Lithium ore & brine processing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"SQM (Chile), IGO (Australia)","info":"Controls the Greenbushes spodumene mine in Australia (world's largest hard-rock lithium mine) via Talison JV. Major global lithium producer with mines in Australia and Chile. Listed on Shenzhen Main Board (002466).","website":"https://www.tianqilithium.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
@@ -39,6 +38,7 @@
 {"region":"China","seg":"Gigafactory","name":"Farasis Energy","sub":"Ganzhou HQ","status":"Commercial","location":"Ganzhou, Jiangxi, China","country":"China","lat":25.8311,"lng":114.9339,"origin":"China","materials":"Soft-pack (pouch) LFP & NCM cells","process":"EV & ESS battery cell manufacturing","capacity":"30+ GWh","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Mercedes-Benz, Geely, BAIC","info":"Specializes in soft-pack (pouch) battery technology. STAR Market listed (688567). Key supplier to Mercedes-Benz for European EV programs. International gigafactory in Bitterfeld-Wolfen Germany (suspended). Also building facility in Turkey (Gemlik).","website":"https://www.farasis.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
 {"region":"China","seg":"Gigafactory","name":"Great Power Energy","sub":"Guangzhou HQ","status":"Commercial","location":"Guangzhou, Guangdong, China","country":"China","lat":23.1291,"lng":113.2644,"origin":"China","materials":"Small Li-ion, ESS battery systems","process":"Consumer & ESS battery manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"Listed company (300438 ChiNext) covering small lithium-ion batteries, energy storage batteries, and power battery packs. Major Pearl River Delta battery player. Focus on system integration for ESS applications.","website":"https://www.great-battery.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
 {"region":"China","seg":"Gigafactory","name":"COSMX Battery","sub":"Ningbo HQ","status":"Commercial","location":"Ningbo, Zhejiang, China","country":"China","lat":29.8683,"lng":121.544,"origin":"China","materials":"Consumer Li-ion, pouch cells","process":"Consumer battery cell manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Chery Automobile","info":"Fast-rising consumer and automotive battery manufacturer in Ningbo. Part of the Yangtze River Delta battery cluster. Key supplier to Chery Automobile's EV programs.","website":"https://www.cosmx.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"},
+{"region":"China","seg":"Recycling","name":"Whalefall Battery Recycling","sub":"Lishui LFP Plant","status":"Commercial","location":"Suichang County, Lishui, Zhejiang, China","country":"China","lat":28.66,"lng":119.3782,"origin":"China","materials":"LFP","process":"GEN4 hydrometallurgical recycling","capacity":"20,000 t/yr","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"20,000t GEN4 LFP","website":"https://www.cetaceacarbon.com","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
 {"region":"China","seg":"Recycling","name":"GEM Co. Ltd","sub":"Shenzhen HQ","status":"Commercial","location":"Shenzhen, Guangdong, China","country":"China","lat":22.5431,"lng":114.0579,"origin":"China","materials":"Recovered Co, Ni, Mn, Li; NCM precursor","process":"Hydrometallurgical recycling, precursor production","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"CATL, Samsung SDI, POSCO","info":"Top-1 Chinese battery recycler by market share. Pioneer in 'recycling-regeneration-cathode material' closed-loop model. Advanced hydrometallurgy and direct regeneration technologies achieving 95%+ recovery rates for Ni, Co, Mn. Processing capacity rapidly scaling as China targets 3.6M tonnes of used batteries in 2025.","website":"https://www.gem.com.cn/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
 {"region":"China","seg":"Recycling","name":"Brunp Recycling","sub":"Changsha Operations","status":"Commercial","location":"Changsha, Hunan, China","country":"China","lat":28.2337,"lng":112.9274,"origin":"China","materials":"Recovered Co, Ni, Mn, Li; cathode precursor","process":"Hydrometallurgical recycling","capacity":"270,000 MT/yr (operating); 300,000+ MT under construction","capacity_2030":"1,000,000 MT","jobs":"","jobs_2030":"","partnerships":"CATL (parent company)","info":"CATL's dedicated recycling arm. Processed over 120 kt of batteries in 2024. 270 kt of capacity in operation with 300+ kt under construction. Longer-term plans targeting 1,000 kt. Achieving 99%+ recovery rates for key metals. Strategic for CATL's closed-loop supply chain and cost control.","website":"https://www.brunp.com.cn/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
 {"region":"China","seg":"Recycling","name":"Guanghua Sci-Tech","sub":"Guangdong Operations","status":"Commercial","location":"Foshan, Guangdong, China","country":"China","lat":23.0218,"lng":113.1216,"origin":"China","materials":"Cobalt sulfate, nickel sulfate, lithium carbonate","process":"Hydrometallurgical recycling","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"","info":"Top-5 Chinese battery recycler. Specializes in precious metal and battery material recovery. Part of China's rapidly scaling recycling sector where 156 licensed recyclers operate under MIIT's whitelist system as of 2024.","website":"https://www.guanghuasci.com/","is_recycling":true,"process_cat":"Hydromet","status_display":"Commercial","status_norm":"Commercial"},
@@ -48,171 +48,166 @@
 {"region":"China","seg":"Automaker JV","name":"Jiyao Tongxing (Geely Battery)","sub":"Zhejiang HQ","status":"Commercial","location":"Hangzhou, Zhejiang, China","country":"China","lat":30.2741,"lng":120.1551,"origin":"China","materials":"LFP, NCM cells for Geely group vehicles","process":"EV battery cell manufacturing","capacity":"","capacity_2030":"","jobs":"","jobs_2030":"","partnerships":"Geely Holding (parent), CATL","info":"Geely consolidated its battery operations in 2024 under Jiyao Tongxing. Manages battery supply across Geely's brands including Zeekr, Galaxy, and Lynk & Co. Full-stack automaker approach to vertical integration in battery supply chain.","website":"https://www.geely.com/","is_recycling":false,"process_cat":"","status_display":"Commercial","status_norm":"Commercial"}
   ];
 
-  // Push into global DATA array
   if (typeof DATA !== 'undefined') {
     CHINA_DATA.forEach(function(r) { DATA.push(r); });
   }
 
-  // 2. Add China seg configs
+  // ── 2. Seg configs ──────────────────────────────────────
   var cnSegs = {
-    'Mining & Resources':  {c:'#f59e0b', l:'⛏ Mining & Resources', r:'China'},
-    'Cathode Materials':   {c:'#ec4899', l:'⚡ Cathode (CAM)', r:'China'},
-    'Anode Materials':     {c:'#8b5cf6', l:'📦 Anode (AAM)', r:'China'},
-    'Electrolyte':         {c:'#06b6d4', l:'🧪 Electrolyte', r:'China'},
-    'Separator':           {c:'#22c55e', l:'🔲 Separator', r:'China'},
-    'Automaker JV':        {c:'#f97316', l:'🚗 Automaker JV', r:'China'}
+    'Mining & Resources': {c:'#f59e0b', l:'⛏ Mining & Resources', r:'China'},
+    'Cathode Materials':  {c:'#ec4899', l:'⚡ Cathode (CAM)',       r:'China'},
+    'Anode Materials':    {c:'#8b5cf6', l:'📦 Anode (AAM)',         r:'China'},
+    'Electrolyte':        {c:'#06b6d4', l:'🧪 Electrolyte',         r:'China'},
+    'Separator':          {c:'#22c55e', l:'🔲 Separator',           r:'China'},
+    'Automaker JV':       {c:'#f97316', l:'🚗 Automaker JV',        r:'China'}
   };
-  Object.keys(cnSegs).forEach(function(k) {
-    if (typeof SEG_CFG !== 'undefined') SEG_CFG[k] = cnSegs[k];
-  });
-
-  // 3. Add China to region colors
-  if (typeof REGION_COLORS !== 'undefined') {
-    REGION_COLORS['China'] = '#fca5a5';
+  if (typeof SEG_CFG !== 'undefined') {
+    Object.keys(cnSegs).forEach(function(k) { SEG_CFG[k] = cnSegs[k]; });
   }
-
-  // 4. Add China to map views
-  if (typeof VIEWS !== 'undefined') {
-    VIEWS['cn'] = [35, 104, 4];
-  }
-
-  // 5. Add China segs to initial selection
-  if (typeof selSegs !== 'undefined') {
+  if (typeof REGION_COLORS !== 'undefined') REGION_COLORS['China'] = '#fca5a5';
+  if (typeof VIEWS        !== 'undefined') VIEWS['cn'] = [35, 104, 4];
+  if (typeof selSegs      !== 'undefined') {
     Object.keys(cnSegs).forEach(function(k) { selSegs.add(k); });
-    // Also add Gigafactory and Recycling for China (already in selSegs)
   }
 
-  // 6. Inject China stats counter into the stats bar
-  var statsBar = document.querySelector('.stats');
-  if (statsBar) {
-    var cnStat = document.createElement('div');
-    cnStat.className = 'sc';
-    cnStat.style.borderColor = '#fca5a5';
-    cnStat.innerHTML = '<div class="n" style="color:#fca5a5" id="sCN">–</div><div class="l">🇨🇳 China</div>';
-    statsBar.appendChild(cnStat);
+  // ── 3. Stats counter ────────────────────────────────────
+  function addChinaStat() {
+    var bar = document.querySelector('.stats');
+    if (bar && !document.getElementById('sCN')) {
+      var d = document.createElement('div');
+      d.className = 'sc'; d.style.borderColor = '#fca5a5';
+      d.innerHTML = '<div class="n" style="color:#fca5a5" id="sCN">–</div><div class="l">🇨🇳 China</div>';
+      bar.appendChild(d);
+    }
   }
 
-  // 7. Inject China tab button into header tabs
-  var tabIN = document.getElementById('tabIN');
-  if (tabIN) {
-    var tabCN = document.createElement('div');
-    tabCN.className = 'rtab cn';
-    tabCN.id = 'tabCN';
-    tabCN.textContent = '🇨🇳 China';
-    tabCN.onclick = function() { setRegion('cn'); };
-    tabIN.parentNode.insertBefore(tabCN, tabIN.nextSibling);
+  // ── 4. China tab button ─────────────────────────────────
+  function addChinaTab() {
+    if (document.getElementById('tabCN')) return;
+    var tabIN = document.getElementById('tabIN');
+    if (!tabIN) return;
+    var t = document.createElement('div');
+    t.className = 'rtab cn'; t.id = 'tabCN'; t.textContent = '🇨🇳 China';
+    t.onclick = function() { setRegion('cn'); };
+    tabIN.parentNode.insertBefore(t, tabIN.nextSibling);
+    // CSS
+    var s = document.createElement('style');
+    s.textContent = '.rtab.active.cn{background:#ef444420;border-color:#ef4444;color:#fca5a5}';
+    document.head.appendChild(s);
   }
 
-  // 8. Add CSS for China tab
-  var style = document.createElement('style');
-  style.textContent = '.rtab.active.cn{background:#ef444420;border-color:#ef4444;color:#fca5a5}';
-  document.head.appendChild(style);
-
-  // 9. Patch setRegion to handle 'cn'
-  var origSetRegion = window.setRegion;
+  // ── 5. Patch setRegion ──────────────────────────────────
+  var _setRegion = window.setRegion;
   window.setRegion = function(reg) {
-    origSetRegion(reg);
-    // Update China tab styling
-    var cnTab = document.getElementById('tabCN');
-    if (cnTab) cnTab.className = 'rtab cn' + (reg === 'cn' ? ' active' : '');
-    // Update seg label
+    _setRegion(reg);
+    var t = document.getElementById('tabCN');
+    if (t) t.className = 'rtab cn' + (reg === 'cn' ? ' active' : '');
     if (reg === 'cn') {
       var lbl = document.getElementById('segRegLabel');
       if (lbl) lbl.textContent = '(China)';
+      if (typeof map !== 'undefined') map.flyTo([35,104], 4, {duration:1.2});
+      renderSegChips();
     }
-    // Fly to China
-    if (reg === 'cn' && typeof map !== 'undefined') {
-      map.flyTo([35, 104], 4, {duration: 1.2});
-    }
-    // Re-render seg chips for China
-    if (reg === 'cn') renderSegChips();
   };
 
-  // 10. Patch filtered() to handle China region
-  var origFiltered = window.filtered;
+  // ── 6. Patch filtered ───────────────────────────────────
+  var _filtered = window.filtered;
   window.filtered = function() {
-    var r = typeof region !== 'undefined' ? region : 'all';
-    if (r === 'cn') {
+    var reg = typeof region !== 'undefined' ? region : 'all';
+    if (reg === 'cn') {
       return DATA.filter(function(row) {
         if (row.region !== 'China') return false;
-        if (!selSegs.has(row.seg)) return false;
-        if (selStatus.size > 0) {
-          var s = row.status_display || row.status;
-          if (!selStatus.has(s)) return false;
+        if (typeof selSegs !== 'undefined' && !selSegs.has(row.seg)) return false;
+        if (typeof selStatus !== 'undefined' && selStatus.size > 0) {
+          if (!selStatus.has(row.status_display || row.status)) return false;
         }
         if (typeof q !== 'undefined' && q) {
-          var txt = (row.name + row.sub + row.location + row.materials + row.process + row.origin + row.info + row.partnerships).toLowerCase();
+          var txt = [row.name,row.sub,row.location,row.materials,row.process,row.info,row.partnerships].join(' ').toLowerCase();
           if (!txt.includes(q)) return false;
         }
         return true;
       });
     }
-    return origFiltered();
+    return _filtered();
   };
 
-  // 11. Patch updateStats to add China count
-  var origUpdateStats = window.updateStats;
+  // ── 7. Patch updateStats ────────────────────────────────
+  var _updateStats = window.updateStats;
   window.updateStats = function(d) {
-    origUpdateStats(d);
-    var cnEl = document.getElementById('sCN');
-    if (cnEl) cnEl.textContent = d.filter(function(r) { return r.region === 'China'; }).length;
+    _updateStats(d);
+    var el = document.getElementById('sCN');
+    if (el) el.textContent = d.filter(function(r) { return r.region === 'China'; }).length;
   };
 
-  // 12. Patch renderSegChips for China
-  var origRenderSegChips = window.renderSegChips;
+  // ── 8. Patch renderSegChips ─────────────────────────────
+  var _renderSegChips = window.renderSegChips;
   window.renderSegChips = function() {
-    var r = typeof region !== 'undefined' ? region : 'all';
-    if (r === 'cn') {
-      var wrap = document.getElementById('segChips');
-      if (!wrap) return;
-      wrap.innerHTML = '';
-      var cnSegList = ['Gigafactory','Mining & Resources','Cathode Materials','Anode Materials','Electrolyte','Separator','Recycling','Automaker JV'];
-      cnSegList.forEach(function(k) {
-        var v = SEG_CFG[k] || {c:'#94a3b8', l:k};
-        var el = document.createElement('div');
-        el.className = 'chip' + (selSegs.has(k) ? ' on' : '');
-        el.style.cssText = 'background:' + v.c + '22;border-color:' + v.c + ';color:' + v.c;
-        el.textContent = v.l || k;
-        el.onclick = (function(key, elem) {
-          return function() {
-            if (selSegs.has(key)) selSegs.delete(key); else selSegs.add(key);
-            elem.classList.toggle('on', selSegs.has(key));
-            refresh();
-          };
-        })(k, el);
-        wrap.appendChild(el);
+    var reg = typeof region !== 'undefined' ? region : 'all';
+    if (reg !== 'cn') { _renderSegChips(); return; }
+    var wrap = document.getElementById('segChips');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    var list = ['Gigafactory','Mining & Resources','Cathode Materials','Anode Materials','Electrolyte','Separator','Recycling','Automaker JV'];
+    list.forEach(function(k) {
+      var v = SEG_CFG[k] || {c:'#94a3b8', l:k};
+      var el = document.createElement('div');
+      el.className = 'chip' + (selSegs.has(k) ? ' on' : '');
+      el.style.cssText = 'background:'+v.c+'22;border-color:'+v.c+';color:'+v.c;
+      el.textContent = v.l || k;
+      el.onclick = (function(key,elem) {
+        return function() {
+          if (selSegs.has(key)) selSegs.delete(key); else selSegs.add(key);
+          elem.classList.toggle('on', selSegs.has(key));
+          refresh();
+        };
+      })(k, el);
+      wrap.appendChild(el);
+    });
+  };
+
+  // ── 9. FIX: Region label in detail panel ───────────────
+  // Uses MutationObserver to catch whenever the panel re-renders.
+  // If the currently selected facility is China but the panel shows
+  // "US/Canada", it replaces every matching element.
+  function fixDetailRegion() {
+    var panel = document.getElementById('detail') ||
+                document.getElementById('detailPanel') ||
+                document.getElementById('panel') ||
+                document.getElementById('pane');
+    if (!panel) return;
+
+    var observer = new MutationObserver(function() {
+      var feat = typeof selFeat !== 'undefined' ? selFeat : null;
+      if (!feat || feat.region !== 'China') return;
+      panel.querySelectorAll('*').forEach(function(el) {
+        // Only process leaf-ish nodes with visible text
+        if (el.children.length > 2) return;
+        var t = el.textContent || '';
+        if (t.includes('US/Canada') || t === '🇺🇸 US/Canada') {
+          el.textContent = '🇨🇳 China';
+          el.style.color   = '#fca5a5';
+          el.style.background = '#ef444420';
+          if ('borderColor' in el.style) el.style.borderColor = '#ef4444';
+        }
       });
-      return;
-    }
-    origRenderSegChips();
-  };
+    });
 
-  // 13. Patch cnt bar to show China flag
-  var origRenderTable = window.renderTable;
-  window.renderTable = function(d) {
-    origRenderTable(d);
-    var cnt = document.getElementById('cntBar');
-    if (cnt) {
-      var cnC = d.filter(function(r) { return r.region === 'China'; }).length;
-      if (cnC && !cnt.innerHTML.includes('🇨🇳')) {
-        cnt.innerHTML += '<span class="rpill" style="background:#ef444420;color:#fca5a5">🇨🇳 ' + cnC + '</span>';
-      }
-    }
-  };
-
-  // 14. Patch filtered to exclude China from non-China regional views
-  // (already handled — origFiltered uses region checks for us/eu/in/all)
-  // We just need to make sure 'all' includes China — it does by default since
-  // 'all' has no region filter in origFiltered.
-
-  // 15. Add 'cn' to the region filter inside origFiltered for non-all views
-  // The existing filtered() already uses: if(region==='us'&&r.region!=='US/Canada') return false;
-  // We patched the cn case above. For 'all', China appears automatically.
-
-  // Re-run refresh to show China data
-  if (typeof refresh === 'function') {
-    setTimeout(refresh, 100);
+    observer.observe(panel, {childList: true, subtree: true, characterData: true});
   }
 
-  console.log('🇨🇳 China battery supply chain data loaded: ' + CHINA_DATA.length + ' facilities');
+  // ── 10. Init ────────────────────────────────────────────
+  function init() {
+    addChinaStat();
+    addChinaTab();
+    fixDetailRegion();
+    if (typeof refresh === 'function') refresh();
+    console.log('🇨🇳 China extension loaded: ' + CHINA_DATA.length + ' facilities');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 200);
+  }
+
 })();
